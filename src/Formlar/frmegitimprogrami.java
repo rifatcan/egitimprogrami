@@ -19,10 +19,14 @@ import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -39,7 +43,8 @@ public class frmegitimprogrami extends javax.swing.JFrame {
         initComponents();
         //show_User_In_Jtable();
         DBCRUD.PostgreSQL.tblegitimprogrami db = new DBCRUD.PostgreSQL.tblegitimprogrami();
-        
+        List<Object> liste = db.Listele();
+        updateTable(liste, jTable1);
         txtid.setEditable(false);
         txttarih.setEditable(false);
         txtgun.setEditable(false);
@@ -51,85 +56,6 @@ public class frmegitimprogrami extends javax.swing.JFrame {
         
         
     }
-    
-   /*public ArrayList<Modeller.tblegitimprogrami> getegitimListesi()
-    {
-        ArrayList<Modeller.tblegitimprogrami> egitimListesi = new ArrayList<>();
-        DBConnection.allConnections baglanti = new DBConnection.allConnections();
-        Modeller.tblegitimprogrami item;
-        String SQL = "select * from tblegitimprogrami";
-        ResultSet rs;
-        
-        try 
-        {
-          PreparedStatement ifade = baglanti.baglan().prepareCall(SQL);
-          rs = ifade.executeQuery();
-          while(rs.next())
-            {
-              item = new Modeller.tblegitimprogrami();
-              item.setId(rs.getInt("id"));
-              item.setTarih(rs.getDate("tarih"));
-              item.setGun(rs.getString("gun"));
-              item.setAletid(rs.getInt("alet_id"));
-              item.setSet(rs.getInt("set"));
-              item.setTekrar(rs.getInt("tekrar"));
-              item.setSiralama(rs.getInt("siralama"));
-              item.setEgitimgrupid(rs.getInt("egitimgrubu_id"));
-              egitimListesi.add(item);
-            }
-        } catch (Exception e) 
-        {
-            e.printStackTrace();
-        }
-        return egitimListesi;
-    }*/
-    
-    /*public void show_User_In_Jtable()
-    {
-        ArrayList<Modeller.tblegitimprogrami> list = getegitimListesi();
-        DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
-        Object [] row = new Object[8];
-        for(int i = 1; i >= list.size(); i++)
-        {
-            row[0] = list.get(i).getId();
-            row[1] = list.get(i).getTarih();
-            row[2] = list.get(i).getGun();
-            row[3] = list.get(i).getAletid();
-            row[4] = list.get(i).getSet();
-            row[5] = list.get(i).getTekrar();
-            row[6] = list.get(i).getSiralama();
-            row[7] = list.get(i).getEgitimgrupid();
-            model.addRow(row);
-        }
-    }*/
-       
-      
-     /*public void Getir() throws ClassNotFoundException {
-      
-      //DBConnection.allConnections baglanti = new DBConnection.allConnections();
-        Modeller.tblegitimprogrami item;
-        String SQL = "select * from tblegitimprogrami";
-        ResultSet rs;     
-       try {
-           PreparedStatement ifade = baglanti.baglan().prepareCall(SQL);
-           rs = ifade.executeQuery(); 
-           int i = 0;
-           while(rs.next())
-           {
-               
-               this.jTable1.setValueAt(rs.getString("id"), i, 0);
-               this.jTable1.setValueAt(rs.getString("tarih"), i, 1);
-               this.jTable1.setValueAt(rs.getString("gun"), i, 2);
-               this.jTable1.setValueAt(rs.getString("alet_id"), i, 3);
-                
-               i=i+1;                       
-           }
-           rs.close();
-                      
-         } catch (SQLException ex) {
-             Logger.getLogger(frmegitimprogrami.class.getName()).log(Level.SEVERE, null, ex);
-         }
-    }*/
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -362,7 +288,6 @@ public class frmegitimprogrami extends javax.swing.JFrame {
 
     private void btnyenikaydetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnyenikaydetActionPerformed
             DBCRUD.PostgreSQL.tblegitimprogrami db = new DBCRUD.PostgreSQL.tblegitimprogrami();
-            DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
             
             btnyenikaydet.setEnabled(false);
             btnkaydet.setEnabled(true);
@@ -379,7 +304,7 @@ public class frmegitimprogrami extends javax.swing.JFrame {
             txtsiralama.setEditable(true);
             txtegitimgrubu.setEditable(true);
             
-           
+            
             
             
             txtid.setText("");
@@ -444,6 +369,8 @@ public class frmegitimprogrami extends javax.swing.JFrame {
     }//GEN-LAST:event_btnsorgulaActionPerformed
 
     private void btnsilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsilActionPerformed
+        DBCRUD.PostgreSQL.tblegitimprogrami db = new DBCRUD.PostgreSQL.tblegitimprogrami();
+        db.Sil(0);
         JOptionPane.showMessageDialog(null, "SİLME İŞLEMİ BAŞARI İLE GERÇEKLEŞTİRİLMİŞTİR.", "SİLME İŞLEMİ",
                 JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnsilActionPerformed
@@ -487,6 +414,27 @@ public class frmegitimprogrami extends javax.swing.JFrame {
         });
     }
 
+    private void updateTable(List<Object> liste, JTable table) {
+       
+            
+            Object[][] data = new Object[liste.size()][8];
+            
+            for(int i = 0; i < liste.size(); i++) {
+                data[i][0] = ((Modeller.tblegitimprogrami) liste.get(i)).getId();
+                data[i][1] = ((Modeller.tblegitimprogrami) liste.get(i)).getTarih();
+                data[i][2] = ((Modeller.tblegitimprogrami) liste.get(i)).getGun();
+                data[i][3] = ((Modeller.tblegitimprogrami) liste.get(i)).getAletid();
+                data[i][4] = ((Modeller.tblegitimprogrami) liste.get(i)).getSet();
+                data[i][5] = ((Modeller.tblegitimprogrami) liste.get(i)).getTekrar();
+                data[i][6] = ((Modeller.tblegitimprogrami) liste.get(i)).getSiralama();
+                data[i][7] = ((Modeller.tblegitimprogrami) liste.get(i)).getEgitimgrupid();
+            }
+            
+            TableModel model = new DefaultTableModel(data, new Object[]{"Id", "Tarih", "Gün", "Alet_Id", "Set", "Tekrar", "Sıralama", "Egitim Grubu"});
+            
+            table.setModel(model);
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btncikis;
     private javax.swing.JButton btnduzenle;
