@@ -41,7 +41,7 @@ public class frmegitimprogrami extends javax.swing.JFrame {
      */
     public frmegitimprogrami() {
         initComponents();
-        //show_User_In_Jtable();
+        
         DBCRUD.PostgreSQL.tblegitimprogrami db = new DBCRUD.PostgreSQL.tblegitimprogrami();
         List<Object> liste = db.Listele();
         updateTable(liste, jTable1);
@@ -66,6 +66,10 @@ public class frmegitimprogrami extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPopupMenu1 = new javax.swing.JPopupMenu();
+        jMPopKaydet = new javax.swing.JMenuItem();
+        jMPopDuzenle = new javax.swing.JMenuItem();
+        jMPopSil = new javax.swing.JMenuItem();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -91,6 +95,45 @@ public class frmegitimprogrami extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
+        jMPopKaydet.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/kaydet_popup_16px.png"))); // NOI18N
+        jMPopKaydet.setText("Kaydet");
+        jMPopKaydet.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                jMPopKaydetAncestorAdded(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        jPopupMenu1.add(jMPopKaydet);
+
+        jMPopDuzenle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/duzenle_popup_16.png"))); // NOI18N
+        jMPopDuzenle.setText("Düzenle");
+        jMPopDuzenle.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                jMPopDuzenleAncestorAdded(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        jPopupMenu1.add(jMPopDuzenle);
+
+        jMPopSil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Trash_23px.png"))); // NOI18N
+        jMPopSil.setText("Sil");
+        jMPopSil.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                jMPopSilAncestorAdded(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
+        jPopupMenu1.add(jMPopSil);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("EGITIM PROGRAMI");
 
@@ -111,7 +154,7 @@ public class frmegitimprogrami extends javax.swing.JFrame {
         jLabel8.setText("Egitim Grubu");
 
         try {
-            txttarih.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##-##-####")));
+            txttarih.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("####-##-##")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -186,6 +229,14 @@ public class frmegitimprogrami extends javax.swing.JFrame {
                 "Id", "Tarih", "Gün", "Alet_id", "Set", "Tekrar", "Sıralama", "Egetim Grubu"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                jTable1MouseReleased(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -304,9 +355,6 @@ public class frmegitimprogrami extends javax.swing.JFrame {
             txtsiralama.setEditable(true);
             txtegitimgrubu.setEditable(true);
             
-            
-            
-            
             txtid.setText("");
             txttarih.setText("");
             txtgun.setText("");
@@ -335,7 +383,7 @@ public class frmegitimprogrami extends javax.swing.JFrame {
         
         
         model.setId(Long.valueOf(this.txtid.getText()));
-        model.setTarih(Date.from(LocalDate.parse(this.txttarih.getText(), DateTimeFormatter.ofPattern("dd-MM-yyyy")).atStartOfDay().toInstant(ZoneOffset.UTC)));
+        model.setTarih(Date.from(LocalDate.parse(this.txttarih.getText(), DateTimeFormatter.ofPattern("yyyy-mm-dd")).atStartOfDay().toInstant(ZoneOffset.UTC)));
         model.setGun(this.txtgun.getText());
         model.setAletid(Long.valueOf(this.txtaletid.getText()));
         model.setSet(Integer.valueOf(this.txtset.getText()));
@@ -344,6 +392,11 @@ public class frmegitimprogrami extends javax.swing.JFrame {
         model.setEgitimgrupid(Long.valueOf(this.txtegitimgrubu.getText()));
         
         db.Kaydet(model);
+        
+        /*DefaultTableModel yenile = (DefaultTableModel)jTable1.getModel();
+        yenile.setRowCount(0);
+        jTable1();*/
+        
         JOptionPane.showMessageDialog(null, "KAYIT İŞLEMİ BAŞARI İLE GERÇEKLEŞTİRİLMİŞTİR.", "KAYIT İŞLEMİ",
                 JOptionPane.INFORMATION_MESSAGE);
         
@@ -359,13 +412,34 @@ public class frmegitimprogrami extends javax.swing.JFrame {
 
     private void btnduzenleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnduzenleActionPerformed
         DBCRUD.PostgreSQL.tblegitimprogrami db = new DBCRUD.PostgreSQL.tblegitimprogrami();
+        btnyenikaydet.setEnabled(false);
+        btnkaydet.setEnabled(true);
+        btnduzenle.setEnabled(true);
+        btnsorgula.setEnabled(false);
+        btnsil.setEnabled(false);
+        
+        txtid.setEditable(true);
+        txttarih.setEditable(true);
+        txtgun.setEditable(true);
+        txtaletid.setEditable(true);
+        txtset.setEditable(true);
+        txttekrar.setEditable(true);
+        txtsiralama.setEditable(true);
+        txtegitimgrubu.setEditable(true);
         
         db.Duzenle(db);
+        JOptionPane.showMessageDialog(null, "DÜZENLEME İŞLEMİ BAŞARI İLE GERÇEKLEŞTİRİLMİŞTİR.", "DÜZENLEME İŞLEMİ",
+        JOptionPane.INFORMATION_MESSAGE);
+        /*DefaultTableModel yenile = (DefaultTableModel)jTable1.getModel();
+        yenile.setRowCount(0);
+        jTable1();*/
     }//GEN-LAST:event_btnduzenleActionPerformed
 
     private void btnsorgulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsorgulaActionPerformed
         DBCRUD.PostgreSQL.tblegitimprogrami db = new DBCRUD.PostgreSQL.tblegitimprogrami();
         db.Bul(0);
+        JOptionPane.showMessageDialog(null, "BULMA İŞLEMİ BAŞARI İLE GERÇEKLEŞTİRİLMİŞTİR.", "BULMA İŞLEMİ",
+        JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnsorgulaActionPerformed
 
     private void btnsilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsilActionPerformed
@@ -378,6 +452,38 @@ public class frmegitimprogrami extends javax.swing.JFrame {
     private void btncikisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncikisActionPerformed
         dispose();
     }//GEN-LAST:event_btncikisActionPerformed
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        int i = jTable1.getSelectedRow();
+        TableModel model = jTable1.getModel();
+        txtid.setText(model.getValueAt(i,0).toString());
+        txttarih.setText(model.getValueAt(i,1).toString());
+        txtgun.setText(model.getValueAt(i,2).toString());
+        txtaletid.setText(model.getValueAt(i,3).toString());
+        txtset.setText(model.getValueAt(i,4).toString());
+        txtsiralama.setText(model.getValueAt(i,5).toString());
+        txttekrar.setText(model.getValueAt(i,6).toString());
+        txtegitimgrubu.setText(model.getValueAt(i,7).toString());
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void jTable1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseReleased
+        if(evt.isPopupTrigger())
+        {
+            jPopupMenu1.show(this,evt.getX(),evt.getY());
+        }
+    }//GEN-LAST:event_jTable1MouseReleased
+
+    private void jMPopKaydetAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jMPopKaydetAncestorAdded
+        
+    }//GEN-LAST:event_jMPopKaydetAncestorAdded
+
+    private void jMPopDuzenleAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jMPopDuzenleAncestorAdded
+       
+    }//GEN-LAST:event_jMPopDuzenleAncestorAdded
+
+    private void jMPopSilAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jMPopSilAncestorAdded
+     
+    }//GEN-LAST:event_jMPopSilAncestorAdded
 
     /**
      * @param args the command line arguments
@@ -450,6 +556,10 @@ public class frmegitimprogrami extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JMenuItem jMPopDuzenle;
+    private javax.swing.JMenuItem jMPopKaydet;
+    private javax.swing.JMenuItem jMPopSil;
+    private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField txtaletid;
@@ -461,4 +571,8 @@ public class frmegitimprogrami extends javax.swing.JFrame {
     private javax.swing.JFormattedTextField txttarih;
     private javax.swing.JTextField txttekrar;
     // End of variables declaration//GEN-END:variables
+
+    private void jTable1() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
