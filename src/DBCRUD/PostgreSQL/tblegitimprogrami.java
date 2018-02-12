@@ -5,7 +5,7 @@
  */
 package DBCRUD.PostgreSQL;
 
-import DBConnections.allConnections;
+import DBConnection.allConnections;
 import DBFramework.ICRUD;
 import java.sql.Date;
 import java.sql.PreparedStatement;
@@ -31,16 +31,18 @@ public class tblegitimprogrami implements ICRUD
         
         try 
         {
-            PreparedStatement ifade = baglanti.baglan().prepareCall("insert into tblegitimprogrami set (tarih , gun , alet_id , set , tekrar , siralama , egitimgrubu_id) values (?,?,?,?,?,?,?)");
-            ifade.setDate(1, (Date) egitim.getTarih());
+            PreparedStatement ifade = baglanti.baglan().prepareCall("insert into tblegitimprogrami (tarih , gun , alet_id , set , tekrar , siralama , egitimgrubu_id) values (?,?,?,?,?,?,?)");
+            ifade.setDate(1, new Date(egitim.getTarih().toInstant().toEpochMilli()));
             ifade.setString(2, egitim.getGun());
             ifade.setInt(3, (int) egitim.getAletid());
-            ifade.setInt(4, egitim.getSet());
-            ifade.setInt(5, egitim.getTekrar());
-            ifade.setInt(6, egitim.getSiralama());
+            ifade.setInt(4, (int) egitim.getSet());
+            ifade.setInt(5, (int) egitim.getTekrar());
+            ifade.setInt(6, (int) egitim.getSiralama());
             ifade.setInt(7, (int) egitim.getEgitimgrupid());
             ifade.executeUpdate();
-        } catch (Exception e) {
+        } catch (Exception e) 
+        {
+            e.printStackTrace();
         }
     }
 
@@ -78,7 +80,7 @@ public class tblegitimprogrami implements ICRUD
         Modeller.tblegitimprogrami item;
         
         try {
-            PreparedStatement ifade = baglanti.baglan().prepareCall("select * from egitimprogrami");
+            PreparedStatement ifade = baglanti.baglan().prepareCall("select * from tblegitimprogrami");
             rs = ifade.executeQuery();
             while(rs.next())
             {
@@ -130,12 +132,12 @@ public class tblegitimprogrami implements ICRUD
         return egitimbul;
     }
     
-     public List<Modeller.tblegitimprogrami> Arama(String ad,String soyad,String telefon,String cinsiyet){
+     public List<Modeller.tblegitimprogrami> Arama(String tarih,String gun,String alet_id,String set ,String tekrar,String siralama , String egitimgrubu_id){
     
-        ArrayList<Modeller.tblegitimprogrami> egitimprograimlistesi= new ArrayList<>();
+        ArrayList<Modeller.tblegitimprogrami> egitimprogramilistesi= new ArrayList<>();
         ResultSet rs;
         Modeller.tblegitimprogrami item;
-        String AnaSQL = "select * from tblegitimprograim";
+        String AnaSQL = "select * from tblegitimprogrami";
         
 //        if(ad!=null) AnaSQL+="ad like '%"+ad+"%' and "; else AnaSQL+="1=1 and ";
 //        if(soyad!=null) AnaSQL+="soyad like '%"+soyad+"%' and ";else AnaSQL+="1=1 and ";
@@ -193,7 +195,7 @@ public class tblegitimprogrami implements ICRUD
              item.setTekrar(rs.getInt("tekrar"));
              item.setSiralama(rs.getInt("siralama"));
              item.setEgitimgrupid(rs.getInt("egitimgrubu_id"));
-             egitimprograimlistesi.add(item);
+             egitimprogramilistesi.add(item);
              }
              
        
@@ -206,32 +208,59 @@ public class tblegitimprogrami implements ICRUD
         return egitimprogramilistesi;      
     }
     
-    public List<Modeller.tblegitimprogrami> YasArama(int yasilk,int yasson) throws SQLException, ClassNotFoundException{
+    public List<Modeller.tblegitimprogrami> tarihlerArasiArama(int ilktarih,int sontarih) throws SQLException, ClassNotFoundException{
         ArrayList<Modeller.tblegitimprogrami> elist = new ArrayList<>();
         Modeller.tblegitimprogrami egt;
         ResultSet rs;
 
         LocalDate gununTarihi = LocalDate.now();
         
-       LocalDate ilkyas = gununTarihi.minusYears(yasilk);
-       LocalDate sonyas = gununTarihi.minusYears(yasson);
+       LocalDate ilktar = gununTarihi.minusYears(ilktarih);
+       LocalDate sontar = gununTarihi.minusYears(sontarih);
         
         
-        String SQL = "select * from tblegitimprogrami where dogumtarihi between '"+sonyas+"' and '"+ilkyas+"' order by dogumtarihi";
+        String SQL = "select * from tblegitimprogrami where tarih between '"+sontar+"' and '"+ilktar+"' order by tarih";
         PreparedStatement ifade = baglanti.baglan().prepareCall(SQL);
         rs = ifade.executeQuery();
         while(rs.next()){
         egt = new Modeller.tblegitimprogrami();
-        egt.setAd(rs.getString("ad"));
-        egt.setSoyad(rs.getString("soyad"));
+        egt.setTarih(rs.getDate("tarih"));
+        egt.setGun(rs.getString("gun"));
+        egt.setAletid(rs.getInt("alet_id"));
+        egt.setSet(rs.getInt("set"));
+        egt.setTekrar(rs.getInt("tekrar"));
+        egt.setEgitimgrupid(rs.getInt("egitimgrubu_id"));
         egt.setId(rs.getInt("id"));
-        egt.setTckimlik(rs.getString("tckimlik"));
-        egt.setDogumtarihi(rs.getDate("dogumtarihi"));
         elist.add(egt);            
         }
-       return elist;
+       return elist;      
+    }
+    
+     public static void main(String[] args) {
+        tblegitimprogrami egitim = new tblegitimprogrami();
+        Modeller.tblegitimprogrami egt = new Modeller.tblegitimprogrami();
+        //Kaydet
+        egt.setSet(5);
+        egt.setGun("20");
+        egt.setAletid(1);
+        egitim.Kaydet(egt);
         
+        //Düzenle
+        /*mst.setTckimlik("2222233344");
+        mst.setAd("DAMLA");
+        mst.setSoyad("GÜRCAN");
+        musteri.Duzenle(mst);*/
         
+        //Sil
+        //musteri.Sil(6);
+        
+        //Listele
+        /*for (Object item : musteri.Listele()) {
+            System.err.println("id............"+((Modeller.tblmusteri)item).getId());
+            System.err.println("TC Kimlik....."+((Modeller.tblmusteri)item).getTckimlik());
+            System.err.println("Adı..........."+((Modeller.tblmusteri)item).getAd());
+            System.err.println("Soyadı........"+((Modeller.tblmusteri)item).getSoyad());
+        }*/
     }
     
 }

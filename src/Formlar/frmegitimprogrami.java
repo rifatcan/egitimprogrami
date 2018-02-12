@@ -5,19 +5,132 @@
  */
 package Formlar;
 
+import DBConnection.allConnections;
+import Modeller.tblegitimprogrami;
+import java.beans.Statement;
+import java.lang.reflect.Executable;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author vektorel
  */
 public class frmegitimprogrami extends javax.swing.JFrame {
-
+    allConnections baglanti = new allConnections();
+    ArrayList<Object> egitimgrubu = new ArrayList<>();
+    Modeller.tblegitimprogrami tmpegitimprogrami;
     /**
      * Creates new form frmegitimprogrami
      */
     public frmegitimprogrami() {
         initComponents();
+        //show_User_In_Jtable();
+        DBCRUD.PostgreSQL.tblegitimprogrami db = new DBCRUD.PostgreSQL.tblegitimprogrami();
+        
+        txtid.setEditable(false);
+        txttarih.setEditable(false);
+        txtgun.setEditable(false);
+        txtaletid.setEditable(false);
+        txtset.setEditable(false);
+        txttekrar.setEditable(false);
+        txtsiralama.setEditable(false);
+        txtegitimgrubu.setEditable(false);
+        
+        
     }
-
+    
+   /*public ArrayList<Modeller.tblegitimprogrami> getegitimListesi()
+    {
+        ArrayList<Modeller.tblegitimprogrami> egitimListesi = new ArrayList<>();
+        DBConnection.allConnections baglanti = new DBConnection.allConnections();
+        Modeller.tblegitimprogrami item;
+        String SQL = "select * from tblegitimprogrami";
+        ResultSet rs;
+        
+        try 
+        {
+          PreparedStatement ifade = baglanti.baglan().prepareCall(SQL);
+          rs = ifade.executeQuery();
+          while(rs.next())
+            {
+              item = new Modeller.tblegitimprogrami();
+              item.setId(rs.getInt("id"));
+              item.setTarih(rs.getDate("tarih"));
+              item.setGun(rs.getString("gun"));
+              item.setAletid(rs.getInt("alet_id"));
+              item.setSet(rs.getInt("set"));
+              item.setTekrar(rs.getInt("tekrar"));
+              item.setSiralama(rs.getInt("siralama"));
+              item.setEgitimgrupid(rs.getInt("egitimgrubu_id"));
+              egitimListesi.add(item);
+            }
+        } catch (Exception e) 
+        {
+            e.printStackTrace();
+        }
+        return egitimListesi;
+    }*/
+    
+    /*public void show_User_In_Jtable()
+    {
+        ArrayList<Modeller.tblegitimprogrami> list = getegitimListesi();
+        DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
+        Object [] row = new Object[8];
+        for(int i = 1; i >= list.size(); i++)
+        {
+            row[0] = list.get(i).getId();
+            row[1] = list.get(i).getTarih();
+            row[2] = list.get(i).getGun();
+            row[3] = list.get(i).getAletid();
+            row[4] = list.get(i).getSet();
+            row[5] = list.get(i).getTekrar();
+            row[6] = list.get(i).getSiralama();
+            row[7] = list.get(i).getEgitimgrupid();
+            model.addRow(row);
+        }
+    }*/
+       
+      
+     /*public void Getir() throws ClassNotFoundException {
+      
+      //DBConnection.allConnections baglanti = new DBConnection.allConnections();
+        Modeller.tblegitimprogrami item;
+        String SQL = "select * from tblegitimprogrami";
+        ResultSet rs;     
+       try {
+           PreparedStatement ifade = baglanti.baglan().prepareCall(SQL);
+           rs = ifade.executeQuery(); 
+           int i = 0;
+           while(rs.next())
+           {
+               
+               this.jTable1.setValueAt(rs.getString("id"), i, 0);
+               this.jTable1.setValueAt(rs.getString("tarih"), i, 1);
+               this.jTable1.setValueAt(rs.getString("gun"), i, 2);
+               this.jTable1.setValueAt(rs.getString("alet_id"), i, 3);
+                
+               i=i+1;                       
+           }
+           rs.close();
+                      
+         } catch (SQLException ex) {
+             Logger.getLogger(frmegitimprogrami.class.getName()).log(Level.SEVERE, null, ex);
+         }
+    }*/
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,21 +140,317 @@ public class frmegitimprogrami extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        txtid = new javax.swing.JTextField();
+        txttarih = new javax.swing.JFormattedTextField();
+        txtgun = new javax.swing.JTextField();
+        txtaletid = new javax.swing.JTextField();
+        txtset = new javax.swing.JTextField();
+        txttekrar = new javax.swing.JTextField();
+        txtsiralama = new javax.swing.JTextField();
+        txtegitimgrubu = new javax.swing.JTextField();
+        btnyenikaydet = new javax.swing.JButton();
+        btnkaydet = new javax.swing.JButton();
+        btnduzenle = new javax.swing.JButton();
+        btnsorgula = new javax.swing.JButton();
+        btnsil = new javax.swing.JButton();
+        btncikis = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("EGITIM PROGRAMI");
+
+        jLabel1.setText("Id");
+
+        jLabel2.setText("Tarih");
+
+        jLabel3.setText("Gun");
+
+        jLabel4.setText("Alet Id");
+
+        jLabel5.setText("Set");
+
+        jLabel6.setText("Tekrar");
+
+        jLabel7.setText("Sıralama");
+
+        jLabel8.setText("Egitim Grubu");
+
+        try {
+            txttarih.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##-##-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        btnyenikaydet.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/yeni_kayit.png"))); // NOI18N
+        btnyenikaydet.setText("Yeni Kaydet");
+        btnyenikaydet.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnyenikaydetActionPerformed(evt);
+            }
+        });
+
+        btnkaydet.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/kaydet.png"))); // NOI18N
+        btnkaydet.setText("Kaydet");
+        btnkaydet.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnkaydetActionPerformed(evt);
+            }
+        });
+
+        btnduzenle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/duzenle.png"))); // NOI18N
+        btnduzenle.setText("Duzenle");
+        btnduzenle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnduzenleActionPerformed(evt);
+            }
+        });
+
+        btnsorgula.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/sorgula_koyumavi_26px.png"))); // NOI18N
+        btnsorgula.setText("Sorgula");
+        btnsorgula.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnsorgulaActionPerformed(evt);
+            }
+        });
+
+        btnsil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/sil.png"))); // NOI18N
+        btnsil.setText("Sil");
+        btnsil.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnsilActionPerformed(evt);
+            }
+        });
+
+        btncikis.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/cikis_26.png"))); // NOI18N
+        btncikis.setText("Çıkış");
+        btncikis.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btncikisActionPerformed(evt);
+            }
+        });
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "Id", "Tarih", "Gün", "Alet_id", "Set", "Tekrar", "Sıralama", "Egetim Grubu"
+            }
+        ));
+        jScrollPane2.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnyenikaydet)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnkaydet, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnsorgula, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnduzenle, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnsil, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btncikis, javax.swing.GroupLayout.PREFERRED_SIZE, 109, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtsiralama, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txttekrar, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtset, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtaletid, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtgun, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txttarih, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
+                            .addComponent(txtegitimgrubu)
+                            .addComponent(txtid, javax.swing.GroupLayout.Alignment.LEADING))
+                        .addGap(10, 10, 10)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 611, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(txtid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(txttarih, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel3)
+                            .addComponent(txtgun, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(txtaletid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(txtset, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(txttekrar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtsiralama, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtegitimgrubu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel8)))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnyenikaydet, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnkaydet, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnduzenle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnsorgula, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnsil, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btncikis, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(12, 12, 12))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnyenikaydetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnyenikaydetActionPerformed
+            DBCRUD.PostgreSQL.tblegitimprogrami db = new DBCRUD.PostgreSQL.tblegitimprogrami();
+            DefaultTableModel model = (DefaultTableModel)jTable1.getModel();
+            
+            btnyenikaydet.setEnabled(false);
+            btnkaydet.setEnabled(true);
+            btnduzenle.setEnabled(false);
+            btnsorgula.setEnabled(false);
+            btnsil.setEnabled(false);
+            
+            txtid.setEditable(true);
+            txttarih.setEditable(true);
+            txtgun.setEditable(true);
+            txtaletid.setEditable(true);
+            txtset.setEditable(true);
+            txttekrar.setEditable(true);
+            txtsiralama.setEditable(true);
+            txtegitimgrubu.setEditable(true);
+            
+           
+            
+            
+            txtid.setText("");
+            txttarih.setText("");
+            txtgun.setText("");
+            txtaletid.setText("");
+            txtset.setText("");
+            txttekrar.setText("");
+            txtsiralama.setText("");
+            txtegitimgrubu.setText("");
+    }//GEN-LAST:event_btnyenikaydetActionPerformed
+
+    private void btnkaydetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnkaydetActionPerformed
+        //String sorgu = ("insert into tblegitimprogrami set (tarih , gun , alet_id , set , tekrar , siralama , egitimgrubu_id) values ('"+txttarih.getText()+"','"+txtgun.getText()+"','"+txtaletid.getText()+"','"+txtset.getText()+"','"+txttekrar.getText()+"','"+txtsiralama.getText()+"','"+txtegitimgrubu.getText()+"')");
+        
+        DBCRUD.PostgreSQL.tblegitimprogrami db = new DBCRUD.PostgreSQL.tblegitimprogrami();
+        
+        //tmpegitimprogrami = new Modeller.tblegitimprogrami();
+        //DefaultTableModel table = (DefaultTableModel)jTable1.getModel();
+        Modeller.tblegitimprogrami model = new Modeller.tblegitimprogrami();
+        
+        
+        btnyenikaydet.setEnabled(true);
+        btnkaydet.setEnabled(false);
+        btnduzenle.setEnabled(true);
+        btnsorgula.setEnabled(true);
+        btnsil.setEnabled(true);
+        
+        
+        model.setId(Long.valueOf(this.txtid.getText()));
+        model.setTarih(Date.from(LocalDate.parse(this.txttarih.getText(), DateTimeFormatter.ofPattern("dd-MM-yyyy")).atStartOfDay().toInstant(ZoneOffset.UTC)));
+        model.setGun(this.txtgun.getText());
+        model.setAletid(Long.valueOf(this.txtaletid.getText()));
+        model.setSet(Integer.valueOf(this.txtset.getText()));
+        model.setTekrar(Integer.valueOf(this.txttekrar.getText()));
+        model.setSiralama(Integer.valueOf(this.txtsiralama.getText()));
+        model.setEgitimgrupid(Long.valueOf(this.txtegitimgrubu.getText()));
+        
+        db.Kaydet(model);
+        JOptionPane.showMessageDialog(null, "KAYIT İŞLEMİ BAŞARI İLE GERÇEKLEŞTİRİLMİŞTİR.", "KAYIT İŞLEMİ",
+                JOptionPane.INFORMATION_MESSAGE);
+        
+        txtid.setText("");
+        txttarih.setText("");
+        txtgun.setText("");
+        txtaletid.setText("");
+        txtset.setText("");
+        txttekrar.setText("");
+        txtsiralama.setText("");
+        txtegitimgrubu.setText("");
+    }//GEN-LAST:event_btnkaydetActionPerformed
+
+    private void btnduzenleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnduzenleActionPerformed
+        DBCRUD.PostgreSQL.tblegitimprogrami db = new DBCRUD.PostgreSQL.tblegitimprogrami();
+        
+        db.Duzenle(db);
+    }//GEN-LAST:event_btnduzenleActionPerformed
+
+    private void btnsorgulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsorgulaActionPerformed
+        DBCRUD.PostgreSQL.tblegitimprogrami db = new DBCRUD.PostgreSQL.tblegitimprogrami();
+        db.Bul(0);
+    }//GEN-LAST:event_btnsorgulaActionPerformed
+
+    private void btnsilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsilActionPerformed
+        JOptionPane.showMessageDialog(null, "SİLME İŞLEMİ BAŞARI İLE GERÇEKLEŞTİRİLMİŞTİR.", "SİLME İŞLEMİ",
+                JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_btnsilActionPerformed
+
+    private void btncikisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncikisActionPerformed
+        dispose();
+    }//GEN-LAST:event_btncikisActionPerformed
 
     /**
      * @param args the command line arguments
@@ -79,5 +488,29 @@ public class frmegitimprogrami extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btncikis;
+    private javax.swing.JButton btnduzenle;
+    private javax.swing.JButton btnkaydet;
+    private javax.swing.JButton btnsil;
+    private javax.swing.JButton btnsorgula;
+    private javax.swing.JButton btnyenikaydet;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTable jTable1;
+    private javax.swing.JTextField txtaletid;
+    private javax.swing.JTextField txtegitimgrubu;
+    private javax.swing.JTextField txtgun;
+    private javax.swing.JTextField txtid;
+    private javax.swing.JTextField txtset;
+    private javax.swing.JTextField txtsiralama;
+    private javax.swing.JFormattedTextField txttarih;
+    private javax.swing.JTextField txttekrar;
     // End of variables declaration//GEN-END:variables
 }

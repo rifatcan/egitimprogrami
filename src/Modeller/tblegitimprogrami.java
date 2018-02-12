@@ -84,7 +84,5 @@ public class tblegitimprogrami {
 
     public void setEgitimgrupid(long egitimgrupid) {
         this.egitimgrupid = egitimgrupid;
-    }
-    
-    
+    }    
 }
