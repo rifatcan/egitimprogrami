@@ -52,7 +52,7 @@ public class tblegitimprogrami implements ICRUD
         egitim = (Modeller.tblegitimprogrami) o;
         
         try {
-            PreparedStatement ifade = baglanti.baglan().prepareCall("update tblegitimprogrami set tarih=? , gun=? , alet_id=? , set=? , tekrar=? ,");
+            PreparedStatement ifade = baglanti.baglan().prepareCall("update tblegitimprogrami set tarih=? , gun=? , alet_id=? , set=? , tekrar=? , siralama , egitimgrubu_id");
                     } catch (ClassNotFoundException ex) {
             Logger.getLogger(tblegitimprogrami.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {

@@ -45,6 +45,13 @@ public class frmegitimprogrami extends javax.swing.JFrame {
         DBCRUD.PostgreSQL.tblegitimprogrami db = new DBCRUD.PostgreSQL.tblegitimprogrami();
         List<Object> liste = db.Listele();
         updateTable(liste, jTable1);
+        
+        btnyenikaydet.setEnabled(true);
+        btnkaydet.setEnabled(false);
+        btnduzenle.setEnabled(true);
+        btnsorgula.setEnabled(true);
+        btnsil.setEnabled(true);
+        
         txtid.setEditable(false);
         txttarih.setEditable(false);
         txtgun.setEditable(false);
@@ -374,16 +381,16 @@ public class frmegitimprogrami extends javax.swing.JFrame {
         //DefaultTableModel table = (DefaultTableModel)jTable1.getModel();
         Modeller.tblegitimprogrami model = new Modeller.tblegitimprogrami();
         
-        
+        //Butonların Görünürlüğünü Sağlıyoruz.
         btnyenikaydet.setEnabled(true);
         btnkaydet.setEnabled(false);
         btnduzenle.setEnabled(true);
         btnsorgula.setEnabled(true);
         btnsil.setEnabled(true);
         
-        
+        //Modeller içerisinde yer alan eğitimgrubu sınıfını set ve get metodlarını çağırıyoruz.
         model.setId(Long.valueOf(this.txtid.getText()));
-        model.setTarih(Date.from(LocalDate.parse(this.txttarih.getText(), DateTimeFormatter.ofPattern("yyyy-mm-dd")).atStartOfDay().toInstant(ZoneOffset.UTC)));
+        model.setTarih(Date.from(LocalDate.parse(this.txttarih.getText(), DateTimeFormatter.ofPattern("yyyy-MM-dd")).atStartOfDay().toInstant(ZoneOffset.UTC)));
         model.setGun(this.txtgun.getText());
         model.setAletid(Long.valueOf(this.txtaletid.getText()));
         model.setSet(Integer.valueOf(this.txtset.getText()));
@@ -391,15 +398,10 @@ public class frmegitimprogrami extends javax.swing.JFrame {
         model.setSiralama(Integer.valueOf(this.txtsiralama.getText()));
         model.setEgitimgrupid(Long.valueOf(this.txtegitimgrubu.getText()));
         
+        //CRUD içerisinde ki kaydet metodunu çağırıyoruz.
         db.Kaydet(model);
         
-        /*DefaultTableModel yenile = (DefaultTableModel)jTable1.getModel();
-        yenile.setRowCount(0);
-        jTable1();*/
-        
-        JOptionPane.showMessageDialog(null, "KAYIT İŞLEMİ BAŞARI İLE GERÇEKLEŞTİRİLMİŞTİR.", "KAYIT İŞLEMİ",
-                JOptionPane.INFORMATION_MESSAGE);
-        
+        //Text Field Boşaltıyoruz.
         txtid.setText("");
         txttarih.setText("");
         txtgun.setText("");
@@ -408,16 +410,25 @@ public class frmegitimprogrami extends javax.swing.JFrame {
         txttekrar.setText("");
         txtsiralama.setText("");
         txtegitimgrubu.setText("");
+        
+        //JTable Yenileme
+        DefaultTableModel yenile = (DefaultTableModel)jTable1.getModel();
+        yenile.setRowCount(0);
+        
+        //Yenile Ardından Tekrardan Listeyi Çağırma
+        List<Object> liste = db.Listele();
+        updateTable(liste, jTable1);
+        
+        //Popup Mesaj
+        JOptionPane.showMessageDialog(null, "KAYIT İŞLEMİ BAŞARI İLE GERÇEKLEŞTİRİLMİŞTİR.", "KAYIT İŞLEMİ",
+                JOptionPane.INFORMATION_MESSAGE);
+        
+        
     }//GEN-LAST:event_btnkaydetActionPerformed
 
     private void btnduzenleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnduzenleActionPerformed
         DBCRUD.PostgreSQL.tblegitimprogrami db = new DBCRUD.PostgreSQL.tblegitimprogrami();
-        btnyenikaydet.setEnabled(false);
-        btnkaydet.setEnabled(true);
-        btnduzenle.setEnabled(true);
-        btnsorgula.setEnabled(false);
-        btnsil.setEnabled(false);
-        
+        Modeller.tblegitimprogrami model = new Modeller.tblegitimprogrami();
         txtid.setEditable(true);
         txttarih.setEditable(true);
         txtgun.setEditable(true);
@@ -427,18 +438,41 @@ public class frmegitimprogrami extends javax.swing.JFrame {
         txtsiralama.setEditable(true);
         txtegitimgrubu.setEditable(true);
         
-        db.Duzenle(db);
+        btnyenikaydet.setEnabled(false);
+        btnkaydet.setEnabled(true);
+        btnduzenle.setEnabled(true);
+        btnsorgula.setEnabled(false);
+        btnsil.setEnabled(false);
+        
+        
+        
+        model.setId(Long.valueOf(this.txtid.getText()));
+        model.setTarih(Date.from(LocalDate.parse(this.txttarih.getText(), DateTimeFormatter.ofPattern("yyyy-MM-dd")).atStartOfDay().toInstant(ZoneOffset.UTC)));
+        model.setGun(this.txtgun.getText());
+        model.setAletid(Long.valueOf(this.txtaletid.getText()));
+        model.setSet(Integer.valueOf(this.txtset.getText()));
+        model.setTekrar(Integer.valueOf(this.txttekrar.getText()));
+        model.setSiralama(Integer.valueOf(this.txtsiralama.getText()));
+        model.setEgitimgrupid(Long.valueOf(this.txtegitimgrubu.getText()));
+        
+        db.Duzenle(model);
+        
+        List<Object> liste = db.Listele();
+        updateTable(liste, jTable1);
+        
+        DefaultTableModel yenile = (DefaultTableModel)jTable1.getModel();
+        yenile.setRowCount(0);
+        
         JOptionPane.showMessageDialog(null, "DÜZENLEME İŞLEMİ BAŞARI İLE GERÇEKLEŞTİRİLMİŞTİR.", "DÜZENLEME İŞLEMİ",
         JOptionPane.INFORMATION_MESSAGE);
-        /*DefaultTableModel yenile = (DefaultTableModel)jTable1.getModel();
-        yenile.setRowCount(0);
-        jTable1();*/
+        
+        
     }//GEN-LAST:event_btnduzenleActionPerformed
 
     private void btnsorgulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsorgulaActionPerformed
         DBCRUD.PostgreSQL.tblegitimprogrami db = new DBCRUD.PostgreSQL.tblegitimprogrami();
         db.Bul(0);
-        JOptionPane.showMessageDialog(null, "BULMA İŞLEMİ BAŞARI İLE GERÇEKLEŞTİRİLMİŞTİR.", "BULMA İŞLEMİ",
+        JOptionPane.showMessageDialog(null, "SORGULAMA İŞLEMİ BAŞARI İLE GERÇEKLEŞTİRİLMİŞTİR.", "BULMA İŞLEMİ",
         JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnsorgulaActionPerformed
 
@@ -464,6 +498,15 @@ public class frmegitimprogrami extends javax.swing.JFrame {
         txtsiralama.setText(model.getValueAt(i,5).toString());
         txttekrar.setText(model.getValueAt(i,6).toString());
         txtegitimgrubu.setText(model.getValueAt(i,7).toString());
+        
+        /*txtid.setEditable(true);
+        txttarih.setEditable(true);
+        txtgun.setEditable(true);
+        txtaletid.setEditable(true);
+        txtset.setEditable(true);
+        txttekrar.setEditable(true);
+        txtsiralama.setEditable(true);
+        txtegitimgrubu.setEditable(true);*/
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jTable1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseReleased
@@ -540,6 +583,29 @@ public class frmegitimprogrami extends javax.swing.JFrame {
             
             table.setModel(model);
     }
+    
+    private void setTable(List<Object> liste, JTable table) {
+       
+            
+            Object[][] data = new Object[liste.size()][8];
+            
+            for(int i = 0; i < liste.size(); i++) {
+                data[i][0] = ((Modeller.tblegitimprogrami) liste.get(i)).getId();
+                data[i][1] = ((Modeller.tblegitimprogrami) liste.get(i)).getTarih();
+                data[i][2] = ((Modeller.tblegitimprogrami) liste.get(i)).getGun();
+                data[i][3] = ((Modeller.tblegitimprogrami) liste.get(i)).getAletid();
+                data[i][4] = ((Modeller.tblegitimprogrami) liste.get(i)).getSet();
+                data[i][5] = ((Modeller.tblegitimprogrami) liste.get(i)).getTekrar();
+                data[i][6] = ((Modeller.tblegitimprogrami) liste.get(i)).getSiralama();
+                data[i][7] = ((Modeller.tblegitimprogrami) liste.get(i)).getEgitimgrupid();
+            }
+            
+            TableModel model = new DefaultTableModel(data, new Object[]{"Id", "Tarih", "Gün", "Alet_Id", "Set", "Tekrar", "Sıralama", "Egitim Grubu"});
+            
+            table.setModel(model);
+    }
+    
+    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btncikis;
