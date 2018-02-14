@@ -457,15 +457,17 @@ public class frmegitimprogrami extends javax.swing.JFrame {
         
         db.Duzenle(model);
         
-        List<Object> liste = db.Listele();
-        updateTable(liste, jTable1);
         
-        DefaultTableModel yenile = (DefaultTableModel)jTable1.getModel();
-        yenile.setRowCount(0);
+        //List<Object> liste = db.Listele();
+        //setTable(liste, jTable1);
+        
+        
         
         JOptionPane.showMessageDialog(null, "DÜZENLEME İŞLEMİ BAŞARI İLE GERÇEKLEŞTİRİLMİŞTİR.", "DÜZENLEME İŞLEMİ",
         JOptionPane.INFORMATION_MESSAGE);
         
+        DefaultTableModel yenile = (DefaultTableModel)jTable1.getModel();
+        yenile.setRowCount(0);
         
     }//GEN-LAST:event_btnduzenleActionPerformed
 
@@ -478,7 +480,10 @@ public class frmegitimprogrami extends javax.swing.JFrame {
 
     private void btnsilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsilActionPerformed
         DBCRUD.PostgreSQL.tblegitimprogrami db = new DBCRUD.PostgreSQL.tblegitimprogrami();
+        Modeller.tblegitimprogrami model = new Modeller.tblegitimprogrami();
+        model.setId(Long.valueOf(this.txtid.getText()));
         db.Sil(0);
+        
         JOptionPane.showMessageDialog(null, "SİLME İŞLEMİ BAŞARI İLE GERÇEKLEŞTİRİLMİŞTİR.", "SİLME İŞLEMİ",
                 JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnsilActionPerformed
@@ -584,7 +589,7 @@ public class frmegitimprogrami extends javax.swing.JFrame {
             table.setModel(model);
     }
     
-    private void setTable(List<Object> liste, JTable table) {
+    /*private void setTable(List<Object> liste, JTable table) {
        
             
             Object[][] data = new Object[liste.size()][8];
@@ -603,7 +608,7 @@ public class frmegitimprogrami extends javax.swing.JFrame {
             TableModel model = new DefaultTableModel(data, new Object[]{"Id", "Tarih", "Gün", "Alet_Id", "Set", "Tekrar", "Sıralama", "Egitim Grubu"});
             
             table.setModel(model);
-    }
+    }*/
     
     
     

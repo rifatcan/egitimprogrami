@@ -51,12 +51,21 @@ public class tblegitimprogrami implements ICRUD
         Modeller.tblegitimprogrami egitim;
         egitim = (Modeller.tblegitimprogrami) o;
         
-        try {
-            PreparedStatement ifade = baglanti.baglan().prepareCall("update tblegitimprogrami set tarih=? , gun=? , alet_id=? , set=? , tekrar=? , siralama , egitimgrubu_id");
-                    } catch (ClassNotFoundException ex) {
-            Logger.getLogger(tblegitimprogrami.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(tblegitimprogrami.class.getName()).log(Level.SEVERE, null, ex);
+          try 
+        {
+            PreparedStatement ifade = baglanti.baglan().prepareCall("update tblegitimprogrami set tarih=? , gun=? , alet_id=? , set=? , tekrar=? , siralama=? , egitimgrubu_id= ? where id=?");
+            ifade.setDate(1, new Date(egitim.getTarih().toInstant().toEpochMilli()));
+            ifade.setString(2, egitim.getGun());
+            ifade.setInt(3, (int) egitim.getAletid());
+            ifade.setInt(4, (int) egitim.getSet());
+            ifade.setInt(5, (int) egitim.getTekrar());
+            ifade.setInt(6, (int) egitim.getSiralama());
+            ifade.setInt(7, (int) egitim.getEgitimgrupid());
+            ifade.setInt(8, (int) egitim.getId());
+            ifade.executeUpdate();
+        } catch (Exception e) 
+        {
+            e.printStackTrace();
         }
     }
 
