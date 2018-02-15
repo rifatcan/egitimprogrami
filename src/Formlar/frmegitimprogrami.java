@@ -411,17 +411,20 @@ public class frmegitimprogrami extends javax.swing.JFrame {
         txtsiralama.setText("");
         txtegitimgrubu.setText("");
         
-        //JTable Yenileme
-        DefaultTableModel yenile = (DefaultTableModel)jTable1.getModel();
-        yenile.setRowCount(0);
         
         //Yenile Ardından Tekrardan Listeyi Çağırma
         List<Object> liste = db.Listele();
         updateTable(liste, jTable1);
         
+        
+        //JTable Yenileme
+        DefaultTableModel yenile = (DefaultTableModel)jTable1.getModel();
+        yenile.setRowCount(1000);
+        
+        
         //Popup Mesaj
-        JOptionPane.showMessageDialog(null, "KAYIT İŞLEMİ BAŞARI İLE GERÇEKLEŞTİRİLMİŞTİR.", "KAYIT İŞLEMİ",
-                JOptionPane.INFORMATION_MESSAGE);
+        //JOptionPane.showMessageDialog(null, "KAYIT İŞLEMİ BAŞARI İLE GERÇEKLEŞTİRİLMİŞTİR.", "KAYIT İŞLEMİ",
+                //JOptionPane.INFORMATION_MESSAGE);
         
         
     }//GEN-LAST:event_btnkaydetActionPerformed
@@ -429,6 +432,7 @@ public class frmegitimprogrami extends javax.swing.JFrame {
     private void btnduzenleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnduzenleActionPerformed
         DBCRUD.PostgreSQL.tblegitimprogrami db = new DBCRUD.PostgreSQL.tblegitimprogrami();
         Modeller.tblegitimprogrami model = new Modeller.tblegitimprogrami();
+        
         txtid.setEditable(true);
         txttarih.setEditable(true);
         txtgun.setEditable(true);
@@ -463,11 +467,11 @@ public class frmegitimprogrami extends javax.swing.JFrame {
         
         
         
-        JOptionPane.showMessageDialog(null, "DÜZENLEME İŞLEMİ BAŞARI İLE GERÇEKLEŞTİRİLMİŞTİR.", "DÜZENLEME İŞLEMİ",
-        JOptionPane.INFORMATION_MESSAGE);
+        //JOptionPane.showMessageDialog(null, "DÜZENLEME İŞLEMİ BAŞARI İLE GERÇEKLEŞTİRİLMİŞTİR.", "DÜZENLEME İŞLEMİ",
+        //JOptionPane.INFORMATION_MESSAGE);
         
         DefaultTableModel yenile = (DefaultTableModel)jTable1.getModel();
-        yenile.setRowCount(0);
+        yenile.setRowCount(1000);
         
     }//GEN-LAST:event_btnduzenleActionPerformed
 
@@ -481,11 +485,15 @@ public class frmegitimprogrami extends javax.swing.JFrame {
     private void btnsilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsilActionPerformed
         DBCRUD.PostgreSQL.tblegitimprogrami db = new DBCRUD.PostgreSQL.tblegitimprogrami();
         Modeller.tblegitimprogrami model = new Modeller.tblegitimprogrami();
+       
         model.setId(Long.valueOf(this.txtid.getText()));
         db.Sil(0);
         
         JOptionPane.showMessageDialog(null, "SİLME İŞLEMİ BAŞARI İLE GERÇEKLEŞTİRİLMİŞTİR.", "SİLME İŞLEMİ",
                 JOptionPane.INFORMATION_MESSAGE);
+        
+        DefaultTableModel yenile = (DefaultTableModel)jTable1.getModel();
+        yenile.rowsRemoved(txtid.remove());
     }//GEN-LAST:event_btnsilActionPerformed
 
     private void btncikisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncikisActionPerformed
@@ -522,11 +530,91 @@ public class frmegitimprogrami extends javax.swing.JFrame {
     }//GEN-LAST:event_jTable1MouseReleased
 
     private void jMPopKaydetAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jMPopKaydetAncestorAdded
+         DBCRUD.PostgreSQL.tblegitimprogrami db = new DBCRUD.PostgreSQL.tblegitimprogrami();
+        Modeller.tblegitimprogrami model = new Modeller.tblegitimprogrami();
+        
+        txtid.setEditable(true);
+        txttarih.setEditable(true);
+        txtgun.setEditable(true);
+        txtaletid.setEditable(true);
+        txtset.setEditable(true);
+        txttekrar.setEditable(true);
+        txtsiralama.setEditable(true);
+        txtegitimgrubu.setEditable(true);
+        
+        model.setId(Long.valueOf(this.txtid.getText()));
+        model.setTarih(Date.from(LocalDate.parse(this.txttarih.getText(), DateTimeFormatter.ofPattern("yyyy-MM-dd")).atStartOfDay().toInstant(ZoneOffset.UTC)));
+        model.setGun(this.txtgun.getText());
+        model.setAletid(Long.valueOf(this.txtaletid.getText()));
+        model.setSet(Integer.valueOf(this.txtset.getText()));
+        model.setTekrar(Integer.valueOf(this.txttekrar.getText()));
+        model.setSiralama(Integer.valueOf(this.txtsiralama.getText()));
+        model.setEgitimgrupid(Long.valueOf(this.txtegitimgrubu.getText()));
+        
+        //CRUD içerisinde ki kaydet metodunu çağırıyoruz.
+        db.Kaydet(model);
+        
+        //Text Field Boşaltıyoruz.
+        /*txtid.setText("");
+        txttarih.setText("");
+        txtgun.setText("");
+        txtaletid.setText("");
+        txtset.setText("");
+        txttekrar.setText("");
+        txtsiralama.setText("");
+        txtegitimgrubu.setText("");*/
+        
+        DefaultTableModel yenile = (DefaultTableModel)jTable1.getModel();
+        yenile.setRowCount(0);
+        
+        //Yenile Ardından Tekrardan Listeyi Çağırma
+        List<Object> liste = db.Listele();
+        updateTable(liste, jTable1);
+        
+        //JTable Yenileme
         
     }//GEN-LAST:event_jMPopKaydetAncestorAdded
 
     private void jMPopDuzenleAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jMPopDuzenleAncestorAdded
-       
+        DBCRUD.PostgreSQL.tblegitimprogrami db = new DBCRUD.PostgreSQL.tblegitimprogrami();
+        Modeller.tblegitimprogrami model = new Modeller.tblegitimprogrami();
+        
+        txtid.setEditable(true);
+        txttarih.setEditable(true);
+        txtgun.setEditable(true);
+        txtaletid.setEditable(true);
+        txtset.setEditable(true);
+        txttekrar.setEditable(true);
+        txtsiralama.setEditable(true);
+        txtegitimgrubu.setEditable(true);
+        
+        btnyenikaydet.setEnabled(false);
+        btnkaydet.setEnabled(true);
+        btnduzenle.setEnabled(false);
+        btnsorgula.setEnabled(false);
+        btnsil.setEnabled(false);
+        
+        
+        model.setId(Long.valueOf(this.txtid.getText()));
+        model.setTarih(Date.from(LocalDate.parse(this.txttarih.getText(), DateTimeFormatter.ofPattern("yyyy-MM-dd")).atStartOfDay().toInstant(ZoneOffset.UTC)));
+        model.setGun(this.txtgun.getText());
+        model.setAletid(Long.valueOf(this.txtaletid.getText()));
+        model.setSet(Integer.valueOf(this.txtset.getText()));
+        model.setTekrar(Integer.valueOf(this.txttekrar.getText()));
+        model.setSiralama(Integer.valueOf(this.txtsiralama.getText()));
+        model.setEgitimgrupid(Long.valueOf(this.txtegitimgrubu.getText()));
+        
+        db.Duzenle(model);
+        
+        DefaultTableModel yenile = (DefaultTableModel)jTable1.getModel();
+        yenile.setRowCount(0);
+        //List<Object> liste = db.Listele();
+        //setTable(liste, jTable1);
+        
+        //JOptionPane.showMessageDialog(null, "DÜZENLEME İŞLEMİ BAŞARI İLE GERÇEKLEŞTİRİLMİŞTİR.", "DÜZENLEME İŞLEMİ",
+        //JOptionPane.INFORMATION_MESSAGE);
+        
+        
     }//GEN-LAST:event_jMPopDuzenleAncestorAdded
 
     private void jMPopSilAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jMPopSilAncestorAdded

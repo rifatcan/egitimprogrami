@@ -71,6 +71,8 @@ public class tblegitimprogrami implements ICRUD
 
     @Override
     public void Sil(long id) {
+        Modeller.tblegitimprogrami egitim = new Modeller.tblegitimprogrami();
+       
         try {
             PreparedStatement ifade = baglanti.baglan().prepareCall("delete from tblegitimprogrami where id=?");
                     ifade.setInt(1, (int) id);
