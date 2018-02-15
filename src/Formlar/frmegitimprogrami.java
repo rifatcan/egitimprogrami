@@ -477,9 +477,24 @@ public class frmegitimprogrami extends javax.swing.JFrame {
 
     private void btnsorgulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsorgulaActionPerformed
         DBCRUD.PostgreSQL.tblegitimprogrami db = new DBCRUD.PostgreSQL.tblegitimprogrami();
+        Modeller.tblegitimprogrami model = new Modeller.tblegitimprogrami();
+        
+        model.setId(Long.valueOf(this.txtid.getText()));
+        model.setTarih(Date.from(LocalDate.parse(this.txttarih.getText(), DateTimeFormatter.ofPattern("yyyy-MM-dd")).atStartOfDay().toInstant(ZoneOffset.UTC)));
+        model.setGun(this.txtgun.getText());
+        model.setAletid(Long.valueOf(this.txtaletid.getText()));
+        model.setSet(Integer.valueOf(this.txtset.getText()));
+        model.setTekrar(Integer.valueOf(this.txttekrar.getText()));
+        model.setSiralama(Integer.valueOf(this.txtsiralama.getText()));
+        model.setEgitimgrupid(Long.valueOf(this.txtegitimgrubu.getText()));
+        
         db.Bul(0);
+        
         JOptionPane.showMessageDialog(null, "SORGULAMA İŞLEMİ BAŞARI İLE GERÇEKLEŞTİRİLMİŞTİR.", "BULMA İŞLEMİ",
         JOptionPane.INFORMATION_MESSAGE);
+        
+        DefaultTableModel yenile = (DefaultTableModel)jTable1.getModel();
+        yenile.findColumn("id");
     }//GEN-LAST:event_btnsorgulaActionPerformed
 
     private void btnsilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsilActionPerformed
@@ -487,13 +502,13 @@ public class frmegitimprogrami extends javax.swing.JFrame {
         Modeller.tblegitimprogrami model = new Modeller.tblegitimprogrami();
        
         model.setId(Long.valueOf(this.txtid.getText()));
-        db.Sil(0);
+        db.Sil(1);
         
         JOptionPane.showMessageDialog(null, "SİLME İŞLEMİ BAŞARI İLE GERÇEKLEŞTİRİLMİŞTİR.", "SİLME İŞLEMİ",
                 JOptionPane.INFORMATION_MESSAGE);
         
         DefaultTableModel yenile = (DefaultTableModel)jTable1.getModel();
-        yenile.rowsRemoved(txtid.remove());
+        yenile.removeRow(0);
     }//GEN-LAST:event_btnsilActionPerformed
 
     private void btncikisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncikisActionPerformed
