@@ -46,20 +46,7 @@ public class frmegitimprogrami extends javax.swing.JFrame {
         List<Object> liste = db.Listele();
         updateTable(liste, jTable1);
         
-        btnyenikaydet.setEnabled(true);
-        btnkaydet.setEnabled(false);
-        btnduzenle.setEnabled(true);
-        btnsorgula.setEnabled(true);
-        btnsil.setEnabled(true);
-        
-        txtid.setEditable(false);
-        txttarih.setEditable(false);
-        txtgun.setEditable(false);
-        txtaletid.setEditable(false);
-        txtset.setEditable(false);
-        txttekrar.setEditable(false);
-        txtsiralama.setEditable(false);
-        txtegitimgrubu.setEditable(false);
+        btnFormCagir();
         
         
     }
@@ -95,7 +82,7 @@ public class frmegitimprogrami extends javax.swing.JFrame {
         txtegitimgrubu = new javax.swing.JTextField();
         btnyenikaydet = new javax.swing.JButton();
         btnkaydet = new javax.swing.JButton();
-        btnduzenle = new javax.swing.JButton();
+        btnguncelle = new javax.swing.JButton();
         btnsorgula = new javax.swing.JButton();
         btnsil = new javax.swing.JButton();
         btncikis = new javax.swing.JButton();
@@ -182,11 +169,11 @@ public class frmegitimprogrami extends javax.swing.JFrame {
             }
         });
 
-        btnduzenle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/duzenle.png"))); // NOI18N
-        btnduzenle.setText("Duzenle");
-        btnduzenle.addActionListener(new java.awt.event.ActionListener() {
+        btnguncelle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/duzenle.png"))); // NOI18N
+        btnguncelle.setText("Güncelle");
+        btnguncelle.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnduzenleActionPerformed(evt);
+                btnguncelleActionPerformed(evt);
             }
         });
 
@@ -236,6 +223,7 @@ public class frmegitimprogrami extends javax.swing.JFrame {
                 "Id", "Tarih", "Gün", "Alet_id", "Set", "Tekrar", "Sıralama", "Egetim Grubu"
             }
         ));
+        jTable1.setComponentPopupMenu(jPopupMenu1);
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable1MouseClicked(evt);
@@ -270,7 +258,7 @@ public class frmegitimprogrami extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnsorgula, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnduzenle, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnguncelle, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnsil, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
@@ -333,7 +321,7 @@ public class frmegitimprogrami extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnyenikaydet, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnkaydet, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnduzenle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnguncelle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnsorgula, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnsil, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -347,29 +335,7 @@ public class frmegitimprogrami extends javax.swing.JFrame {
     private void btnyenikaydetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnyenikaydetActionPerformed
             DBCRUD.PostgreSQL.tblegitimprogrami db = new DBCRUD.PostgreSQL.tblegitimprogrami();
             
-            btnyenikaydet.setEnabled(false);
-            btnkaydet.setEnabled(true);
-            btnduzenle.setEnabled(false);
-            btnsorgula.setEnabled(false);
-            btnsil.setEnabled(false);
-            
-            txtid.setEditable(true);
-            txttarih.setEditable(true);
-            txtgun.setEditable(true);
-            txtaletid.setEditable(true);
-            txtset.setEditable(true);
-            txttekrar.setEditable(true);
-            txtsiralama.setEditable(true);
-            txtegitimgrubu.setEditable(true);
-            
-            txtid.setText("");
-            txttarih.setText("");
-            txtgun.setText("");
-            txtaletid.setText("");
-            txtset.setText("");
-            txttekrar.setText("");
-            txtsiralama.setText("");
-            txtegitimgrubu.setText("");
+            btnAcYeniKayit();
     }//GEN-LAST:event_btnyenikaydetActionPerformed
 
     private void btnkaydetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnkaydetActionPerformed
@@ -381,12 +347,7 @@ public class frmegitimprogrami extends javax.swing.JFrame {
         //DefaultTableModel table = (DefaultTableModel)jTable1.getModel();
         Modeller.tblegitimprogrami model = new Modeller.tblegitimprogrami();
         
-        //Butonların Görünürlüğünü Sağlıyoruz.
-        btnyenikaydet.setEnabled(true);
-        btnkaydet.setEnabled(false);
-        btnduzenle.setEnabled(true);
-        btnsorgula.setEnabled(true);
-        btnsil.setEnabled(true);
+        
         
         //Modeller içerisinde yer alan eğitimgrubu sınıfını set ve get metodlarını çağırıyoruz.
         model.setId(Long.valueOf(this.txtid.getText()));
@@ -402,14 +363,14 @@ public class frmegitimprogrami extends javax.swing.JFrame {
         db.Kaydet(model);
         
         //Text Field Boşaltıyoruz.
-        txtid.setText("");
+        /*txtid.setText("");
         txttarih.setText("");
         txtgun.setText("");
         txtaletid.setText("");
         txtset.setText("");
         txttekrar.setText("");
         txtsiralama.setText("");
-        txtegitimgrubu.setText("");
+        txtegitimgrubu.setText("");*/
         
         
         //Yenile Ardından Tekrardan Listeyi Çağırma
@@ -419,35 +380,22 @@ public class frmegitimprogrami extends javax.swing.JFrame {
         
         //JTable Yenileme
         DefaultTableModel yenile = (DefaultTableModel)jTable1.getModel();
-        yenile.setRowCount(1000);
+        yenile.getRowCount();
         
-        
+        //Butonların Görünürlüğünü Sağlıyoruz.
+        btnKapatKaydet();
         //Popup Mesaj
-        //JOptionPane.showMessageDialog(null, "KAYIT İŞLEMİ BAŞARI İLE GERÇEKLEŞTİRİLMİŞTİR.", "KAYIT İŞLEMİ",
-                //JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "KAYIT İŞLEMİ BAŞARI İLE GERÇEKLEŞTİRİLMİŞTİR.", "KAYIT İŞLEMİ",
+        JOptionPane.INFORMATION_MESSAGE);
         
         
     }//GEN-LAST:event_btnkaydetActionPerformed
 
-    private void btnduzenleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnduzenleActionPerformed
+    private void btnguncelleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguncelleActionPerformed
         DBCRUD.PostgreSQL.tblegitimprogrami db = new DBCRUD.PostgreSQL.tblegitimprogrami();
         Modeller.tblegitimprogrami model = new Modeller.tblegitimprogrami();
         
-        txtid.setEditable(true);
-        txttarih.setEditable(true);
-        txtgun.setEditable(true);
-        txtaletid.setEditable(true);
-        txtset.setEditable(true);
-        txttekrar.setEditable(true);
-        txtsiralama.setEditable(true);
-        txtegitimgrubu.setEditable(true);
-        
-        btnyenikaydet.setEnabled(false);
-        btnkaydet.setEnabled(true);
-        btnduzenle.setEnabled(true);
-        btnsorgula.setEnabled(false);
-        btnsil.setEnabled(false);
-        
+        btnAcDuzenle();
         
         
         model.setId(Long.valueOf(this.txtid.getText()));
@@ -462,7 +410,7 @@ public class frmegitimprogrami extends javax.swing.JFrame {
         db.Duzenle(model);
         
         
-        //List<Object> liste = db.Listele();
+        List<Object> liste = db.Listele();
         //setTable(liste, jTable1);
         
         
@@ -471,9 +419,8 @@ public class frmegitimprogrami extends javax.swing.JFrame {
         //JOptionPane.INFORMATION_MESSAGE);
         
         DefaultTableModel yenile = (DefaultTableModel)jTable1.getModel();
-        yenile.setRowCount(1000);
-        
-    }//GEN-LAST:event_btnduzenleActionPerformed
+        yenile.setNumRows(0);
+    }//GEN-LAST:event_btnguncelleActionPerformed
 
     private void btnsorgulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsorgulaActionPerformed
         DBCRUD.PostgreSQL.tblegitimprogrami db = new DBCRUD.PostgreSQL.tblegitimprogrami();
@@ -548,14 +495,16 @@ public class frmegitimprogrami extends javax.swing.JFrame {
          DBCRUD.PostgreSQL.tblegitimprogrami db = new DBCRUD.PostgreSQL.tblegitimprogrami();
         Modeller.tblegitimprogrami model = new Modeller.tblegitimprogrami();
         
-        txtid.setEditable(true);
+        btnKapatKaydet();
+        
+        /*txtid.setEditable(true);
         txttarih.setEditable(true);
         txtgun.setEditable(true);
         txtaletid.setEditable(true);
         txtset.setEditable(true);
         txttekrar.setEditable(true);
         txtsiralama.setEditable(true);
-        txtegitimgrubu.setEditable(true);
+        txtegitimgrubu.setEditable(true);*/
         
         model.setId(Long.valueOf(this.txtid.getText()));
         model.setTarih(Date.from(LocalDate.parse(this.txttarih.getText(), DateTimeFormatter.ofPattern("yyyy-MM-dd")).atStartOfDay().toInstant(ZoneOffset.UTC)));
@@ -594,20 +543,7 @@ public class frmegitimprogrami extends javax.swing.JFrame {
         DBCRUD.PostgreSQL.tblegitimprogrami db = new DBCRUD.PostgreSQL.tblegitimprogrami();
         Modeller.tblegitimprogrami model = new Modeller.tblegitimprogrami();
         
-        txtid.setEditable(true);
-        txttarih.setEditable(true);
-        txtgun.setEditable(true);
-        txtaletid.setEditable(true);
-        txtset.setEditable(true);
-        txttekrar.setEditable(true);
-        txtsiralama.setEditable(true);
-        txtegitimgrubu.setEditable(true);
-        
-        btnyenikaydet.setEnabled(false);
-        btnkaydet.setEnabled(true);
-        btnduzenle.setEnabled(false);
-        btnsorgula.setEnabled(false);
-        btnsil.setEnabled(false);
+        btnAcDuzenle();
         
         
         model.setId(Long.valueOf(this.txtid.getText()));
@@ -689,8 +625,98 @@ public class frmegitimprogrami extends javax.swing.JFrame {
             
             TableModel model = new DefaultTableModel(data, new Object[]{"Id", "Tarih", "Gün", "Alet_Id", "Set", "Tekrar", "Sıralama", "Egitim Grubu"});
             
+            
             table.setModel(model);
+            //table.getColumnModel().getColumn(0).setWidth(0);
     }
+    
+    public void btnFormCagir()
+    {
+       btnyenikaydet.setEnabled(true);
+        btnkaydet.setEnabled(false);
+        btnguncelle.setEnabled(true);
+        btnsorgula.setEnabled(true);
+        btnsil.setEnabled(true);
+        
+        txtid.setEditable(false);
+        txttarih.setEditable(false);
+        txtgun.setEditable(false);
+        txtaletid.setEditable(false);
+        txtset.setEditable(false);
+        txttekrar.setEditable(false);
+        txtsiralama.setEditable(false);
+        txtegitimgrubu.setEditable(false); 
+    }
+    
+    public void btnAcYeniKayit()
+    {
+      btnyenikaydet.setEnabled(false);
+            btnkaydet.setEnabled(true);
+            btnguncelle.setEnabled(false);
+            btnsorgula.setEnabled(false);
+            btnsil.setEnabled(false);
+            
+            txtid.setEditable(true);
+            txttarih.setEditable(true);
+            txtgun.setEditable(true);
+            txtaletid.setEditable(true);
+            txtset.setEditable(true);
+            txttekrar.setEditable(true);
+            txtsiralama.setEditable(true);
+            txtegitimgrubu.setEditable(true);
+            
+            txtid.setText("");
+            txttarih.setText("");
+            txtgun.setText("");
+            txtaletid.setText("");
+            txtset.setText("");
+            txttekrar.setText("");
+            txtsiralama.setText("");
+            txtegitimgrubu.setText("");  
+    }
+    
+    public void btnKapatKaydet()
+    {
+        btnyenikaydet.setEnabled(true);
+        btnkaydet.setEnabled(false);
+        btnguncelle.setEnabled(true);
+        btnsorgula.setEnabled(true);
+        btnsil.setEnabled(true);
+        
+        txtid.setText("");
+            txttarih.setText("");
+            txtgun.setText("");
+            txtaletid.setText("");
+            txtset.setText("");
+            txttekrar.setText("");
+            txtsiralama.setText("");
+            txtegitimgrubu.setText(""); 
+    }
+    
+    public void btnAcDuzenle()
+    {
+        txtid.setEditable(true);
+        txttarih.setEditable(true);
+        txtgun.setEditable(true);
+        txtaletid.setEditable(true);
+        txtset.setEditable(true);
+        txttekrar.setEditable(true);
+        txtsiralama.setEditable(true);
+        txtegitimgrubu.setEditable(true);
+        
+        btnyenikaydet.setEnabled(false);
+        btnkaydet.setEnabled(true);
+        btnguncelle.setEnabled(true);
+        btnsorgula.setEnabled(false);
+        btnsil.setEnabled(false);
+        
+    }
+    
+    public void AcDuzenle(int id)
+    {
+        btnAcDuzenle();
+    }
+            
     
     /*private void setTable(List<Object> liste, JTable table) {
        
@@ -717,7 +743,7 @@ public class frmegitimprogrami extends javax.swing.JFrame {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btncikis;
-    private javax.swing.JButton btnduzenle;
+    private javax.swing.JButton btnguncelle;
     private javax.swing.JButton btnkaydet;
     private javax.swing.JButton btnsil;
     private javax.swing.JButton btnsorgula;

@@ -88,7 +88,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnsorgula" min="-2" pref="120" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btnduzenle" min="-2" pref="120" max="-2" attributes="0"/>
+                      <Component id="btnguncelle" min="-2" pref="120" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnsil" min="-2" pref="120" max="-2" attributes="0"/>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
@@ -168,7 +168,7 @@
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="btnyenikaydet" alignment="3" max="32767" attributes="0"/>
                   <Component id="btnkaydet" alignment="3" max="32767" attributes="0"/>
-                  <Component id="btnduzenle" alignment="3" max="32767" attributes="0"/>
+                  <Component id="btnguncelle" alignment="3" max="32767" attributes="0"/>
                   <Component id="btnsorgula" alignment="3" max="32767" attributes="0"/>
                   <Component id="btnsil" alignment="3" max="32767" attributes="0"/>
               </Group>
@@ -263,15 +263,15 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnkaydetActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="btnduzenle">
+    <Component class="javax.swing.JButton" name="btnguncelle">
       <Properties>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
           <Image iconType="3" name="/Images/duzenle.png"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Duzenle"/>
+        <Property name="text" type="java.lang.String" value="G&#xfc;ncelle"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnduzenleActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnguncelleActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="btnsorgula">
@@ -371,6 +371,9 @@
                   <Renderer/>
                 </Column>
               </TableColumnModel>
+            </Property>
+            <Property name="componentPopupMenu" type="javax.swing.JPopupMenu" editor="org.netbeans.modules.form.ComponentChooserEditor">
+              <ComponentRef name="jPopupMenu1"/>
             </Property>
             <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
