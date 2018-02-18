@@ -2,44 +2,30 @@
 
 <Form version="1.5" maxVersion="1.9" type="org.netbeans.modules.form.forminfo.JFrameFormInfo">
   <NonVisualComponents>
-    <Container class="javax.swing.JPopupMenu" name="jPopupMenu1">
+    <Container class="javax.swing.JPopupMenu" name="jPopupMenu2">
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout">
         <Property name="useNullLayout" type="boolean" value="true"/>
       </Layout>
       <SubComponents>
-        <MenuItem class="javax.swing.JMenuItem" name="jMPopKaydet">
-          <Properties>
-            <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Images/kaydet_popup_16px.png"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Kaydet"/>
-          </Properties>
-          <Events>
-            <EventHandler event="ancestorAdded" listener="javax.swing.event.AncestorListener" parameters="javax.swing.event.AncestorEvent" handler="jMPopKaydetAncestorAdded"/>
-          </Events>
-        </MenuItem>
-        <MenuItem class="javax.swing.JMenuItem" name="jMPopDuzenle">
+        <MenuItem class="javax.swing.JMenuItem" name="mnuDuzenle">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
               <Image iconType="3" name="/Images/duzenle_popup_16.png"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="D&#xfc;zenle"/>
+            <Property name="text" type="java.lang.String" value="Duzenle"/>
           </Properties>
           <Events>
-            <EventHandler event="ancestorAdded" listener="javax.swing.event.AncestorListener" parameters="javax.swing.event.AncestorEvent" handler="jMPopDuzenleAncestorAdded"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="mnuDuzenleActionPerformed"/>
           </Events>
         </MenuItem>
-        <MenuItem class="javax.swing.JMenuItem" name="jMPopSil">
+        <MenuItem class="javax.swing.JMenuItem" name="mnuSil">
           <Properties>
             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-              <Image iconType="3" name="/Images/Trash_23px.png"/>
+              <Image iconType="3" name="/Images/Trash_22px.png"/>
             </Property>
             <Property name="text" type="java.lang.String" value="Sil"/>
           </Properties>
-          <Events>
-            <EventHandler event="ancestorAdded" listener="javax.swing.event.AncestorListener" parameters="javax.swing.event.AncestorEvent" handler="jMPopSilAncestorAdded"/>
-          </Events>
         </MenuItem>
       </SubComponents>
     </Container>
@@ -373,7 +359,7 @@
               </TableColumnModel>
             </Property>
             <Property name="componentPopupMenu" type="javax.swing.JPopupMenu" editor="org.netbeans.modules.form.ComponentChooserEditor">
-              <ComponentRef name="jPopupMenu1"/>
+              <ComponentRef name="jPopupMenu2"/>
             </Property>
             <Property name="tableHeader" type="javax.swing.table.JTableHeader" editor="org.netbeans.modules.form.editors2.JTableHeaderEditor">
               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>

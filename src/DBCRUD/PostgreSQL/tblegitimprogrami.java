@@ -91,7 +91,7 @@ public class tblegitimprogrami implements ICRUD
         Modeller.tblegitimprogrami item;
         
         try {
-            PreparedStatement ifade = baglanti.baglan().prepareCall("select * from tblegitimprogrami");
+            PreparedStatement ifade = baglanti.baglan().prepareCall("select * from tblegitimprogrami order by id");
             rs = ifade.executeQuery();
             while(rs.next())
             {

@@ -36,6 +36,8 @@ public class frmegitimprogrami extends javax.swing.JFrame {
     allConnections baglanti = new allConnections();
     ArrayList<Object> egitimgrubu = new ArrayList<>();
     Modeller.tblegitimprogrami tmpegitimprogrami;
+    DBCRUD.PostgreSQL.tblegitimprogrami db = new DBCRUD.PostgreSQL.tblegitimprogrami();
+    Modeller.tblegitimprogrami model = new Modeller.tblegitimprogrami();
     /**
      * Creates new form frmegitimprogrami
      */
@@ -60,10 +62,9 @@ public class frmegitimprogrami extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPopupMenu1 = new javax.swing.JPopupMenu();
-        jMPopKaydet = new javax.swing.JMenuItem();
-        jMPopDuzenle = new javax.swing.JMenuItem();
-        jMPopSil = new javax.swing.JMenuItem();
+        jPopupMenu2 = new javax.swing.JPopupMenu();
+        mnuDuzenle = new javax.swing.JMenuItem();
+        mnuSil = new javax.swing.JMenuItem();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -89,44 +90,18 @@ public class frmegitimprogrami extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
-        jMPopKaydet.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/kaydet_popup_16px.png"))); // NOI18N
-        jMPopKaydet.setText("Kaydet");
-        jMPopKaydet.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                jMPopKaydetAncestorAdded(evt);
-            }
-            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+        mnuDuzenle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/duzenle_popup_16.png"))); // NOI18N
+        mnuDuzenle.setText("Duzenle");
+        mnuDuzenle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuDuzenleActionPerformed(evt);
             }
         });
-        jPopupMenu1.add(jMPopKaydet);
+        jPopupMenu2.add(mnuDuzenle);
 
-        jMPopDuzenle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/duzenle_popup_16.png"))); // NOI18N
-        jMPopDuzenle.setText("Düzenle");
-        jMPopDuzenle.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                jMPopDuzenleAncestorAdded(evt);
-            }
-            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
-            }
-        });
-        jPopupMenu1.add(jMPopDuzenle);
-
-        jMPopSil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Trash_23px.png"))); // NOI18N
-        jMPopSil.setText("Sil");
-        jMPopSil.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                jMPopSilAncestorAdded(evt);
-            }
-            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
-            }
-        });
-        jPopupMenu1.add(jMPopSil);
+        mnuSil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Trash_22px.png"))); // NOI18N
+        mnuSil.setText("Sil");
+        jPopupMenu2.add(mnuSil);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("EGITIM PROGRAMI");
@@ -223,7 +198,7 @@ public class frmegitimprogrami extends javax.swing.JFrame {
                 "Id", "Tarih", "Gün", "Alet_id", "Set", "Tekrar", "Sıralama", "Egetim Grubu"
             }
         ));
-        jTable1.setComponentPopupMenu(jPopupMenu1);
+        jTable1.setComponentPopupMenu(jPopupMenu2);
         jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTable1MouseClicked(evt);
@@ -395,10 +370,12 @@ public class frmegitimprogrami extends javax.swing.JFrame {
         DBCRUD.PostgreSQL.tblegitimprogrami db = new DBCRUD.PostgreSQL.tblegitimprogrami();
         Modeller.tblegitimprogrami model = new Modeller.tblegitimprogrami();
         
-        btnAcDuzenle();
+        
+        guncelle();
+        btnGuncelleKapat();
         
         
-        model.setId(Long.valueOf(this.txtid.getText()));
+        /*model.setId(Long.valueOf(this.txtid.getText()));
         model.setTarih(Date.from(LocalDate.parse(this.txttarih.getText(), DateTimeFormatter.ofPattern("yyyy-MM-dd")).atStartOfDay().toInstant(ZoneOffset.UTC)));
         model.setGun(this.txtgun.getText());
         model.setAletid(Long.valueOf(this.txtaletid.getText()));
@@ -407,10 +384,11 @@ public class frmegitimprogrami extends javax.swing.JFrame {
         model.setSiralama(Integer.valueOf(this.txtsiralama.getText()));
         model.setEgitimgrupid(Long.valueOf(this.txtegitimgrubu.getText()));
         
-        db.Duzenle(model);
-        
+        db.Duzenle(model);*/
         
         List<Object> liste = db.Listele();
+        updateTable(liste, jTable1);
+        //List<Object> liste = db.Listele();
         //setTable(liste, jTable1);
         
         
@@ -418,8 +396,8 @@ public class frmegitimprogrami extends javax.swing.JFrame {
         //JOptionPane.showMessageDialog(null, "DÜZENLEME İŞLEMİ BAŞARI İLE GERÇEKLEŞTİRİLMİŞTİR.", "DÜZENLEME İŞLEMİ",
         //JOptionPane.INFORMATION_MESSAGE);
         
-        DefaultTableModel yenile = (DefaultTableModel)jTable1.getModel();
-        yenile.setNumRows(0);
+        //DefaultTableModel yenile = (DefaultTableModel)jTable1.getModel();
+        //yenile.setNumRows(0);
     }//GEN-LAST:event_btnguncelleActionPerformed
 
     private void btnsorgulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsorgulaActionPerformed
@@ -487,90 +465,15 @@ public class frmegitimprogrami extends javax.swing.JFrame {
     private void jTable1MouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseReleased
         if(evt.isPopupTrigger())
         {
-            jPopupMenu1.show(this,evt.getX(),evt.getY());
+            jPopupMenu2.show(this,evt.getX(),evt.getY());
         }
     }//GEN-LAST:event_jTable1MouseReleased
 
-    private void jMPopKaydetAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jMPopKaydetAncestorAdded
-         DBCRUD.PostgreSQL.tblegitimprogrami db = new DBCRUD.PostgreSQL.tblegitimprogrami();
-        Modeller.tblegitimprogrami model = new Modeller.tblegitimprogrami();
-        
-        btnKapatKaydet();
-        
-        /*txtid.setEditable(true);
-        txttarih.setEditable(true);
-        txtgun.setEditable(true);
-        txtaletid.setEditable(true);
-        txtset.setEditable(true);
-        txttekrar.setEditable(true);
-        txtsiralama.setEditable(true);
-        txtegitimgrubu.setEditable(true);*/
-        
-        model.setId(Long.valueOf(this.txtid.getText()));
-        model.setTarih(Date.from(LocalDate.parse(this.txttarih.getText(), DateTimeFormatter.ofPattern("yyyy-MM-dd")).atStartOfDay().toInstant(ZoneOffset.UTC)));
-        model.setGun(this.txtgun.getText());
-        model.setAletid(Long.valueOf(this.txtaletid.getText()));
-        model.setSet(Integer.valueOf(this.txtset.getText()));
-        model.setTekrar(Integer.valueOf(this.txttekrar.getText()));
-        model.setSiralama(Integer.valueOf(this.txtsiralama.getText()));
-        model.setEgitimgrupid(Long.valueOf(this.txtegitimgrubu.getText()));
-        
-        //CRUD içerisinde ki kaydet metodunu çağırıyoruz.
-        db.Kaydet(model);
-        
-        //Text Field Boşaltıyoruz.
-        /*txtid.setText("");
-        txttarih.setText("");
-        txtgun.setText("");
-        txtaletid.setText("");
-        txtset.setText("");
-        txttekrar.setText("");
-        txtsiralama.setText("");
-        txtegitimgrubu.setText("");*/
-        
-        DefaultTableModel yenile = (DefaultTableModel)jTable1.getModel();
-        yenile.setRowCount(0);
-        
-        //Yenile Ardından Tekrardan Listeyi Çağırma
-        List<Object> liste = db.Listele();
-        updateTable(liste, jTable1);
-        
-        //JTable Yenileme
-        
-    }//GEN-LAST:event_jMPopKaydetAncestorAdded
-
-    private void jMPopDuzenleAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jMPopDuzenleAncestorAdded
-        DBCRUD.PostgreSQL.tblegitimprogrami db = new DBCRUD.PostgreSQL.tblegitimprogrami();
-        Modeller.tblegitimprogrami model = new Modeller.tblegitimprogrami();
-        
-        btnAcDuzenle();
-        
-        
-        model.setId(Long.valueOf(this.txtid.getText()));
-        model.setTarih(Date.from(LocalDate.parse(this.txttarih.getText(), DateTimeFormatter.ofPattern("yyyy-MM-dd")).atStartOfDay().toInstant(ZoneOffset.UTC)));
-        model.setGun(this.txtgun.getText());
-        model.setAletid(Long.valueOf(this.txtaletid.getText()));
-        model.setSet(Integer.valueOf(this.txtset.getText()));
-        model.setTekrar(Integer.valueOf(this.txttekrar.getText()));
-        model.setSiralama(Integer.valueOf(this.txtsiralama.getText()));
-        model.setEgitimgrupid(Long.valueOf(this.txtegitimgrubu.getText()));
-        
-        db.Duzenle(model);
-        
-        DefaultTableModel yenile = (DefaultTableModel)jTable1.getModel();
-        yenile.setRowCount(0);
-        //List<Object> liste = db.Listele();
-        //setTable(liste, jTable1);
-        
-        //JOptionPane.showMessageDialog(null, "DÜZENLEME İŞLEMİ BAŞARI İLE GERÇEKLEŞTİRİLMİŞTİR.", "DÜZENLEME İŞLEMİ",
-        //JOptionPane.INFORMATION_MESSAGE);
-        
-        
-    }//GEN-LAST:event_jMPopDuzenleAncestorAdded
-
-    private void jMPopSilAncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jMPopSilAncestorAdded
-     
-    }//GEN-LAST:event_jMPopSilAncestorAdded
+    private void mnuDuzenleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuDuzenleActionPerformed
+      int id;
+      id = (int)jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 4);
+      AcDuzenle(id);
+    }//GEN-LAST:event_mnuDuzenleActionPerformed
 
     /**
      * @param args the command line arguments
@@ -705,7 +608,26 @@ public class frmegitimprogrami extends javax.swing.JFrame {
         txtegitimgrubu.setEditable(true);
         
         btnyenikaydet.setEnabled(false);
-        btnkaydet.setEnabled(true);
+        btnkaydet.setEnabled(false);
+        btnguncelle.setEnabled(true);
+        btnsorgula.setEnabled(false);
+        btnsil.setEnabled(false);
+        
+    }
+    
+    public void btnGuncelleKapat()
+    {
+        txtid.setEditable(false);
+        txttarih.setEditable(false);
+        txtgun.setEditable(false);
+        txtaletid.setEditable(false);
+        txtset.setEditable(false);
+        txttekrar.setEditable(false);
+        txtsiralama.setEditable(false);
+        txtegitimgrubu.setEditable(false);
+        
+        btnyenikaydet.setEnabled(false);
+        btnkaydet.setEnabled(false);
         btnguncelle.setEnabled(true);
         btnsorgula.setEnabled(false);
         btnsil.setEnabled(false);
@@ -715,9 +637,31 @@ public class frmegitimprogrami extends javax.swing.JFrame {
     public void AcDuzenle(int id)
     {
         btnAcDuzenle();
+        model = (Modeller.tblegitimprogrami) db.Bul(id);
+        System.out.println("id..:"+txtid.getText());
+        //model.setId(Long.valueOf(this.txtid.getText()));
+        model.setTarih(Date.from(LocalDate.parse(this.txttarih.getText(), DateTimeFormatter.ofPattern("yyyy-MM-dd")).atStartOfDay().toInstant(ZoneOffset.UTC)));
+        model.setGun(this.txtgun.getText());
+        model.setAletid(Long.valueOf(this.txtaletid.getText()));
+        model.setSet(Integer.valueOf(this.txtset.getText()));
+        model.setTekrar(Integer.valueOf(this.txttekrar.getText()));
+        model.setSiralama(Integer.valueOf(this.txtsiralama.getText()));
+        model.setEgitimgrupid(Long.valueOf(this.txtegitimgrubu.getText()));
     }
             
-    
+    public void guncelle()
+    {
+        model.setId(Long.valueOf(this.txtid.getText()));
+        model.setTarih(Date.from(LocalDate.parse(this.txttarih.getText(), DateTimeFormatter.ofPattern("yyyy-MM-dd")).atStartOfDay().toInstant(ZoneOffset.UTC)));
+        model.setGun(this.txtgun.getText());
+        model.setAletid(Long.valueOf(this.txtaletid.getText()));
+        model.setSet(Integer.valueOf(this.txtset.getText()));
+        model.setTekrar(Integer.valueOf(this.txttekrar.getText()));
+        model.setSiralama(Integer.valueOf(this.txtsiralama.getText()));
+        model.setEgitimgrupid(Long.valueOf(this.txtegitimgrubu.getText()));
+        db.Duzenle(model);
+         
+    }
     /*private void setTable(List<Object> liste, JTable table) {
        
             
@@ -756,12 +700,11 @@ public class frmegitimprogrami extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JMenuItem jMPopDuzenle;
-    private javax.swing.JMenuItem jMPopKaydet;
-    private javax.swing.JMenuItem jMPopSil;
-    private javax.swing.JPopupMenu jPopupMenu1;
+    private javax.swing.JPopupMenu jPopupMenu2;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
+    private javax.swing.JMenuItem mnuDuzenle;
+    private javax.swing.JMenuItem mnuSil;
     private javax.swing.JTextField txtaletid;
     private javax.swing.JTextField txtegitimgrubu;
     private javax.swing.JTextField txtgun;
