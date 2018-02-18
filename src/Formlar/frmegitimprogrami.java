@@ -431,10 +431,13 @@ public class frmegitimprogrami extends javax.swing.JFrame {
         
        int id;
        id = (int)jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 4);
+       db.Sil(id);
        
+       DefaultTableModel yenile = (DefaultTableModel)jTable1.getModel();
+       yenile.removeRow(0);
         
-        //JOptionPane.showMessageDialog(null, "SİLME İŞLEMİ BAŞARI İLE GERÇEKLEŞTİRİLMİŞTİR.", "SİLME İŞLEMİ",
-          //      JOptionPane.INFORMATION_MESSAGE);
+       JOptionPane.showMessageDialog(null, "SİLME İŞLEMİ BAŞARI İLE GERÇEKLEŞTİRİLMİŞTİR.", "SİLME İŞLEMİ",
+       JOptionPane.INFORMATION_MESSAGE);
         
        
     }//GEN-LAST:event_btnsilActionPerformed
@@ -481,6 +484,7 @@ public class frmegitimprogrami extends javax.swing.JFrame {
     private void mnuSilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuSilActionPerformed
        int id;
        id = (int)jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 4);
+       db.Sil(0);
     }//GEN-LAST:event_mnuSilActionPerformed
 
     /**
@@ -671,14 +675,14 @@ public class frmegitimprogrami extends javax.swing.JFrame {
          
     }
     
-    public void sil(int id)
+    /*public void sil(int id)
     {
         int onay = JOptionPane.showConfirmDialog(null, "Seçilen Kaydı Silmek İstiyor musunuz?", "UYARI!!!", JOptionPane.YES_NO_OPTION);
         if(onay==JOptionPane.YES_OPTION)
-        db.Sil(id);
+        db.Sil(0);
         else
             JOptionPane.showInputDialog("Silme işlemi iptal edilmiştir.");
-    }
+    }*/
     /*private void setTable(List<Object> liste, JTable table) {
        
             

@@ -40,6 +40,7 @@ public class tblegitimprogrami implements ICRUD
             ifade.setInt(6, (int) egitim.getSiralama());
             ifade.setInt(7, (int) egitim.getEgitimgrupid());
             ifade.executeUpdate();
+            baglanti.BaglantiKapat();
         } catch (Exception e) 
         {
             e.printStackTrace();
@@ -63,6 +64,7 @@ public class tblegitimprogrami implements ICRUD
             ifade.setInt(7, (int) egitim.getEgitimgrupid());
             ifade.setInt(8, (int) egitim.getId());
             ifade.executeUpdate();
+            baglanti.BaglantiKapat();
         } catch (Exception e) 
         {
             e.printStackTrace();
@@ -77,6 +79,7 @@ public class tblegitimprogrami implements ICRUD
             PreparedStatement ifade = baglanti.baglan().prepareCall("delete from tblegitimprogrami where id=?");
                     ifade.setInt(1, (int) id);
                     ifade.executeUpdate();
+                    baglanti.BaglantiKapat();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(tblegitimprogrami.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
@@ -106,6 +109,7 @@ public class tblegitimprogrami implements ICRUD
                 item.setEgitimgrupid(rs.getInt("egitimgrubu_id"));
                 egitimprogramilistesi.add(item);
             }
+            baglanti.BaglantiKapat();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(tblegitimprogrami.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
@@ -134,6 +138,7 @@ public class tblegitimprogrami implements ICRUD
                 egitimbul.setSiralama(rs.getInt("siralama"));
                 egitimbul.setEgitimgrupid(rs.getInt("egitimgrubu_id"));
             }
+            baglanti.BaglantiKapat();
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(tblegitimprogrami.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
@@ -208,7 +213,7 @@ public class tblegitimprogrami implements ICRUD
              item.setEgitimgrupid(rs.getInt("egitimgrubu_id"));
              egitimprogramilistesi.add(item);
              }
-             
+             baglanti.BaglantiKapat();
        
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(tblegitimprogrami.class.getName()).log(Level.SEVERE, null, ex);
@@ -244,6 +249,7 @@ public class tblegitimprogrami implements ICRUD
         egt.setId(rs.getInt("id"));
         elist.add(egt);            
         }
+        baglanti.BaglantiKapat();
        return elist;      
     }
     

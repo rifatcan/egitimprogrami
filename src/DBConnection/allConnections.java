@@ -17,7 +17,6 @@ import java.sql.SQLException;
 public class allConnections {
     
     Connection baglanti;
-  
     public Connection baglan() throws ClassNotFoundException, SQLException{
     if(staticValues.isDB==0) return pgSQLBaglan();
     else if(staticValues.isDB==1) return OracleBaglan();
@@ -26,10 +25,9 @@ public class allConnections {
     
     }
     
-    public Connection baglantiKapat() throws ClassNotFoundException, SQLException
+    public void BaglantiKapat() throws SQLException
     {
-        baglanti.close();
-        return null;
+    baglanti.close();
     }
     
     
