@@ -101,6 +101,11 @@ public class frmegitimprogrami extends javax.swing.JFrame {
 
         mnuSil.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/Trash_22px.png"))); // NOI18N
         mnuSil.setText("Sil");
+        mnuSil.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mnuSilActionPerformed(evt);
+            }
+        });
         jPopupMenu2.add(mnuSil);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -423,17 +428,15 @@ public class frmegitimprogrami extends javax.swing.JFrame {
     }//GEN-LAST:event_btnsorgulaActionPerformed
 
     private void btnsilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsilActionPerformed
-        DBCRUD.PostgreSQL.tblegitimprogrami db = new DBCRUD.PostgreSQL.tblegitimprogrami();
-        Modeller.tblegitimprogrami model = new Modeller.tblegitimprogrami();
+        
+       int id;
+       id = (int)jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 4);
        
-        model.setId(Long.valueOf(this.txtid.getText()));
-        db.Sil(1);
         
-        JOptionPane.showMessageDialog(null, "SİLME İŞLEMİ BAŞARI İLE GERÇEKLEŞTİRİLMİŞTİR.", "SİLME İŞLEMİ",
-                JOptionPane.INFORMATION_MESSAGE);
+        //JOptionPane.showMessageDialog(null, "SİLME İŞLEMİ BAŞARI İLE GERÇEKLEŞTİRİLMİŞTİR.", "SİLME İŞLEMİ",
+          //      JOptionPane.INFORMATION_MESSAGE);
         
-        DefaultTableModel yenile = (DefaultTableModel)jTable1.getModel();
-        yenile.removeRow(0);
+       
     }//GEN-LAST:event_btnsilActionPerformed
 
     private void btncikisActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncikisActionPerformed
@@ -474,6 +477,11 @@ public class frmegitimprogrami extends javax.swing.JFrame {
       id = (int)jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 4);
       AcDuzenle(id);
     }//GEN-LAST:event_mnuDuzenleActionPerformed
+
+    private void mnuSilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mnuSilActionPerformed
+       int id;
+       id = (int)jTable1.getModel().getValueAt(jTable1.getSelectedRow(), 4);
+    }//GEN-LAST:event_mnuSilActionPerformed
 
     /**
      * @param args the command line arguments
@@ -626,11 +634,11 @@ public class frmegitimprogrami extends javax.swing.JFrame {
         txtsiralama.setEditable(false);
         txtegitimgrubu.setEditable(false);
         
-        btnyenikaydet.setEnabled(false);
-        btnkaydet.setEnabled(false);
-        btnguncelle.setEnabled(true);
-        btnsorgula.setEnabled(false);
-        btnsil.setEnabled(false);
+        btnyenikaydet.setEnabled(true);
+        btnkaydet.setEnabled(true);
+        btnguncelle.setEnabled(false);
+        btnsorgula.setEnabled(true);
+        btnsil.setEnabled(true);
         
     }
     
@@ -661,6 +669,15 @@ public class frmegitimprogrami extends javax.swing.JFrame {
         model.setEgitimgrupid(Long.valueOf(this.txtegitimgrubu.getText()));
         db.Duzenle(model);
          
+    }
+    
+    public void sil(int id)
+    {
+        int onay = JOptionPane.showConfirmDialog(null, "Seçilen Kaydı Silmek İstiyor musunuz?", "UYARI!!!", JOptionPane.YES_NO_OPTION);
+        if(onay==JOptionPane.YES_OPTION)
+        db.Sil(id);
+        else
+            JOptionPane.showInputDialog("Silme işlemi iptal edilmiştir.");
     }
     /*private void setTable(List<Object> liste, JTable table) {
        
